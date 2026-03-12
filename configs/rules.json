@@ -1,0 +1,69 @@
+[
+	{
+		"name": "Lead SOC Analyst Tier 2",
+		"must_contain": [
+			["lead"],
+			["soc", "security", "csoc", "cssp", "cybersecurity"],
+			["analyst"],
+			["2"]
+		],
+		"must_not_contain": [["1"], ["3"], ["jr", "junior"]]
+	},
+	{
+		"name": "Junior SOC Analyst Tier 1",
+		"must_contain": [
+			["jr", "junior"],
+			["soc", "security", "csoc", "cssp"],
+			["analyst"],
+			["1"]
+		],
+		"must_not_contain": [["2"], ["3"], ["lead"]]
+	},
+	{
+		"name": "SOC Analyst Tier 3",
+		"must_contain": [
+			["soc", "security", "csoc", "cssp", "cybersecurity"],
+			["analyst"],
+			["3"]
+		],
+		"must_not_contain": [["1"], ["2"], ["lead"], ["jr", "junior"]]
+	},
+	{
+		"name": "SOC Analyst Tier 2",
+		"must_contain": [
+			["soc", "security", "csoc", "cssp", "cybersecurity"],
+			["analyst"],
+			["2"]
+		],
+		"must_not_contain": [["1"], ["3"], ["lead"], ["jr", "junior"]]
+	},
+	{
+		"name": "SOC Analyst Tier 1",
+		"must_contain": [
+			["soc", "security", "csoc", "cssp", "cybersecurity"],
+			["analyst"],
+			["1"]
+		],
+		"must_not_contain": [["2"], ["3"], ["lead"], ["jr", "junior"]]
+	},
+	{
+		"name": "SOC Analyst (General)",
+		"must_contain": [
+			["soc", "security", "csoc", "cssp", "cybersecurity"],
+			["analyst"]
+		],
+		"must_not_contain": [
+			["1"],
+			["2"],
+			["3"],
+			["lead"],
+			["jr", "junior"],
+			["engineer"]
+		]
+	},
+	{
+		"name": "Cyber Security Engineer",
+		"must_contain": [["cyber", "cybersecurity"], ["engineer"]],
+		"must_not_contain": [["analyst"]]
+	}
+]
