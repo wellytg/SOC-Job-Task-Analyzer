@@ -6,6 +6,7 @@ env/
 venv/
 ENV/
 socenv/
+._manifest_state.txt
 .env
 .vscode/
 .idea/
