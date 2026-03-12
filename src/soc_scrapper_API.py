@@ -5,6 +5,10 @@ import time
 import serpapi
 import json
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 def serpapi_google_jobs_search(query, location="United States", max_pages=50):
