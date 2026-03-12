@@ -3,6 +3,7 @@ requests
 selenium
 webdriver_manager
 google-api-python-client
+google-search-results
 openai
 google-generativeai
 anthropic
