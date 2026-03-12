@@ -1,0 +1,12 @@
+pandas
+re
+json
+argparse
+requests
+selenium
+webdriver_manager
+google-api-python-client
+openai
+google-generativeai
+anthropic
+python-dotenv
