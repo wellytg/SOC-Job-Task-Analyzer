@@ -1,7 +1,4 @@
 pandas
-re
-json
-argparse
 requests
 selenium
 webdriver_manager
