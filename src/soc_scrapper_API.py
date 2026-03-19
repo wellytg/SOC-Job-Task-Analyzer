@@ -7,8 +7,9 @@ import json
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file (support UTF-8 BOM if present)
+# using utf-8-sig will strip BOM if the file was saved with one
+load_dotenv(encoding="utf-8-sig")
 
 
 def serpapi_google_jobs_search(query, location="United States", max_pages=50):
@@ -115,9 +116,74 @@ def extract_responsibilities(description_text):
     return responsibilities.strip()
 
 
+def get_quarter_folder():
+    """Calculate current quarter folder (e.g., 2025-Q1)"""
+    now = datetime.now()
+    quarter = (now.month - 1) // 3 + 1
+    return f"{now.year}-Q{quarter}"
+
+
+def setup_raw_folders(source="serpapi"):
+    """Create folder structure: data/raw/{source}/{quarter}/run_{timestamp}/"""
+    base_raw = "data/raw"
+    quarter = get_quarter_folder()
+    run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run_folder = os.path.join(base_raw, source, quarter, f"run_{run_timestamp}")
+    
+    os.makedirs(run_folder, exist_ok=True)
+    return run_folder, run_timestamp
+
+
+def setup_processed_folders(source="serpapi"):
+    """Create folder structure: data/processed/{source}_{quarter}/"""
+    base_processed = "data/processed"
+    quarter = get_quarter_folder()
+    processed_folder = os.path.join(base_processed, f"{source}_{quarter}")
+    
+    os.makedirs(processed_folder, exist_ok=True)
+    return processed_folder
+
+
+def update_runs_log(run_info):
+    """Append run metadata to data/raw/runs_log.json"""
+    log_file = "data/raw/runs_log.json"
+    
+    # Initialize log if it doesn't exist
+    if os.path.exists(log_file):
+        with open(log_file, "r", encoding="utf-8") as f:
+            runs = json.load(f)
+    else:
+        runs = []
+    
+    runs.append(run_info)
+    
+    with open(log_file, "w", encoding="utf-8") as f:
+        json.dump(runs, f, ensure_ascii=False, indent=2)
+    
+    print(f"Updated runs_log.json (total runs: {len(runs)})")
+
+
+def update_changelog(summary):
+    """Create/update data/processed/CHANGELOG.md with run summary"""
+    changelog_file = "data/processed/CHANGELOG.md"
+    
+    if not os.path.exists(changelog_file):
+        with open(changelog_file, "w", encoding="utf-8") as f:
+            f.write("# Scraping Changelog\n\n")
+    
+    with open(changelog_file, "a", encoding="utf-8") as f:
+        f.write(f"## {summary['timestamp_display']}\n")
+        f.write(f"- **Source**: {summary['source']}\n")
+        f.write(f"- **Queries**: {', '.join(summary['queries'])}\n")
+        f.write(f"- **Total Jobs**: {summary['total_jobs']} (unique: {summary['unique_jobs']})\n")
+        f.write(f"- **Raw File**: {summary['raw_file']}\n")
+        f.write(f"- **Processed File**: {summary['processed_file']}\n")
+        f.write(f"\n")
+
+
 def main():
     # --- Configuration ---
-    # Use multiple queries to capture more variations of the job title
+    source = "serpapi"
     search_queries = [
         "SOC Analyst Tier 1",
         "Security Operations Center Analyst Tier 1",
@@ -130,27 +196,63 @@ def main():
     all_jobs_raw = []
 
     print("Starting job scraping via SerpApi...")
+    run_start_time = datetime.now()
+    
     for query in search_queries:
         jobs_for_query = serpapi_google_jobs_search(query, location, max_pages)
         all_jobs_raw.extend(jobs_for_query)
-        time.sleep(2) # Add a delay between different search queries
+        time.sleep(2)
 
     if not all_jobs_raw:
         print("No jobs found or error occurred during scraping.")
         return
 
-    # De-duplicate raw results based on a unique identifier if available (e.g., job_id)
-    unique_jobs = {job['job_id']: job for job in all_jobs_raw}.values()
+    # De-duplicate raw results
+    unique_dict = {}
+    skipped = 0
+    for job in all_jobs_raw:
+        jid = job.get("job_id")
+        if jid:
+            unique_dict[jid] = job
+        else:
+            skipped += 1
+    if skipped:
+        print(f"Warning: skipped {skipped} job(s) without a job_id field")
+    unique_jobs = list(unique_dict.values())
     print(f"\nFound {len(all_jobs_raw)} total jobs, with {len(unique_jobs)} unique jobs after de-duplication.")
 
-    # Save full raw JSON for backup with timestamp
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    raw_filename = f"soc_jobs_raw_{timestamp}.json"
-    with open(raw_filename, "w", encoding="utf-8") as f:
-        json.dump(list(unique_jobs), f, ensure_ascii=False, indent=4)
-    print(f"Saved raw JSON: {raw_filename} ({len(unique_jobs)} jobs)")
+    # Setup folders and get paths
+    raw_folder, run_timestamp = setup_raw_folders(source)
+    processed_folder = setup_processed_folders(source)
 
-    # Process and save data (your existing code here)
+    # Save raw JSON
+    raw_filename = f"soc_jobs_raw_{run_timestamp}.json"
+    raw_filepath = os.path.join(raw_folder, raw_filename)
+    with open(raw_filepath, "w", encoding="utf-8") as f:
+        json.dump(unique_jobs, f, ensure_ascii=False, indent=4)
+    print(f"Saved raw JSON: {raw_filepath}")
+
+    # Save run metadata
+    run_duration = (datetime.now() - run_start_time).total_seconds()
+    metadata = {
+        "timestamp": run_timestamp,
+        "source": source,
+        "queries": search_queries,
+        "location": location,
+        "total_jobs_raw": len(all_jobs_raw),
+        "unique_jobs": len(unique_jobs),
+        "skipped": skipped,
+        "duration_seconds": run_duration,
+        "raw_file": raw_filepath
+    }
+    metadata_filepath = os.path.join(raw_folder, "run_metadata.json")
+    with open(metadata_filepath, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, ensure_ascii=False, indent=2)
+
+    # Update runs log
+    update_runs_log(metadata)
+
+    # Process and save data
     jobs_flattened = []
     for job in unique_jobs:
         jobs_flattened.append({
@@ -161,8 +263,21 @@ def main():
         })
 
     df = pd.DataFrame(jobs_flattened)
-    df.to_csv(f"soc_jobs_flattened_{timestamp}.csv", index=False)
-    print(f"Saved flattened CSV: soc_jobs_flattened_{timestamp}.csv ({len(jobs_flattened)} jobs)")
+    processed_filename = f"soc_jobs_flattened_{run_timestamp}.csv"
+    processed_filepath = os.path.join(processed_folder, processed_filename)
+    df.to_csv(processed_filepath, index=False)
+    print(f"Saved flattened CSV: {processed_filepath}")
+
+    # Update changelog
+    update_changelog({
+        "timestamp_display": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "source": source,
+        "queries": search_queries,
+        "total_jobs": len(all_jobs_raw),
+        "unique_jobs": len(unique_jobs),
+        "raw_file": raw_filepath,
+        "processed_file": processed_filepath
+    })
 
 if __name__ == "__main__":
     main()

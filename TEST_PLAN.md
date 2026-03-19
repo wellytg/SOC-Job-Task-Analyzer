@@ -27,13 +27,13 @@ Follow these steps to verify that the project is correctly set up and the analys
 ---
 
 ## **Step 2: Verify Rule-Based Classification**
-We will test if the `data_analsyer.py` can process a sample file using your `rules.json`.
+We will test if the `data_analyzer.py` can process a sample file using your `rules.json`.
 
 1.  **Prepare Test Data**: 
     Ensure you have at least one `.csv` file in `data/processed/`. (e.g., `soc_jobs_flattened_20251029_192918.csv`).
 2.  **Run the Script**:
     ```powershell
-    python src/data_analsyer.py data/processed/soc_jobs_flattened_20251029_192918.csv configs/rules.json
+    python src/data_analyzer.py data/processed/soc_jobs_flattened_20251029_192918.csv configs/rules.json
     ```
 3.  **Expected Output**:
     - The terminal should show "Loading and consolidating...", "De-duplicating...", and "Classifying titles...".
@@ -54,5 +54,5 @@ We will test if the `data_analsyer.py` can process a sample file using your `rul
 
 ## **Step 4: VS Code Integration Tips**
 - **Select Interpreter**: Press `Ctrl + Shift + P`, type "Python: Select Interpreter", and choose the one in your `./venv/`.
-- **Debugging**: Open `src/data_analsyer.py`, set a breakpoint (click the red dot next to line numbers), and press `F5` to debug the execution.
+- **Debugging**: Open `src/data_analyzer.py`, set a breakpoint (click the red dot next to line numbers), and press `F5` to debug the execution.
 - **Git**: Use the "Source Control" tab (`Ctrl + Shift + G`) to see changes and sync with GitHub.
