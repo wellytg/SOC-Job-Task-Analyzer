@@ -1,0 +1,177 @@
+[
+  {
+    "primary_theme": "Security Monitoring & Alert Triage",
+    "strategic_goal": "Detection Velocity",
+    "sub_themes": [
+      {
+        "name": "SIEM & Log Monitoring",
+        "keywords": ["siem", "splunk", "qradar", "sentinel", "log", "dashboard", "monitor", "watch"],
+        "description": "Continuous observation of security information and event management systems."
+      },
+      {
+        "name": "Real-time Alert Triage",
+        "keywords": ["alert", "triage", "incoming", "real-time", "queue", "first level"],
+        "description": "Initial assessment and prioritization of security alerts as they occur."
+      },
+      {
+        "name": "Anomaly & Event Detection",
+        "keywords": ["anomaly", "event", "behavioral", "unusual", "suspicious", "detect"],
+        "description": "Identification of deviations from normal baseline activities."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Incident Response & Containment",
+    "strategic_goal": "Impact Mitigation",
+    "sub_themes": [
+      {
+        "name": "Containment & Isolation",
+        "keywords": ["contain", "isolate", "quarantine", "block", "restrict", "suppress"],
+        "description": "Actions taken to limit the scope and magnitude of a security incident."
+      },
+      {
+        "name": "Incident Remediation",
+        "keywords": ["remediate", "fix", "resolve", "clean", "remove", "eradicate"],
+        "description": "Technical steps to remove threats and restore systems to a known good state."
+      },
+      {
+        "name": "Escalation Management",
+        "keywords": ["escalat", "notify", "hand-off", "tier 2", "tier 3", "incident lead"],
+        "description": "The process of moving complex incidents to higher-level specialized teams."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Threat Analysis & Investigation",
+    "strategic_goal": "Triage Accuracy",
+    "sub_themes": [
+      {
+        "name": "Root Cause Analysis",
+        "keywords": ["root cause", "rca", "investigat", "why", "origin", "source"],
+        "description": "Determining the underlying reason for a security event or incident."
+      },
+      {
+        "name": "Digital Forensics",
+        "keywords": ["forensic", "artifacts", "evidence", "chain of custody", "memory dump", "disk image"],
+        "description": "Collection and analysis of digital evidence from systems and networks."
+      },
+      {
+        "name": "Malware Analysis",
+        "keywords": ["malware", "virus", "trojan", "sandbox", "reverse engineer", "static analysis", "dynamic analysis"],
+        "description": "Examination of malicious software to understand its behavior and impact."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Vulnerability & Attack Surface Management",
+    "strategic_goal": "Risk Reduction",
+    "sub_themes": [
+      {
+        "name": "Vulnerability Scanning",
+        "keywords": ["vulnerability", "scan", "nessus", "qualys", "rapid7", "cve", "cvss"],
+        "description": "Automated identification of known security weaknesses in the environment."
+      },
+      {
+        "name": "Patch & Update Management",
+        "keywords": ["patch", "update", "version", "upgrade", "fix", "remediation tracking"],
+        "description": "Ensuring systems are up-to-date with the latest security fixes."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Threat Intelligence & Research",
+    "strategic_goal": "Proactive Defense",
+    "sub_themes": [
+      {
+        "name": "IOC Consumption & Matching",
+        "keywords": ["ioc", "indicator", "hash", "ip address", "domain", "threat feed"],
+        "description": "Integrating external indicators of compromise into internal monitoring."
+      },
+      {
+        "name": "OSINT & Threat Research",
+        "keywords": ["osint", "research", "intel", "actor", "campaign", "adversary", "ttp"],
+        "description": "Gathering intelligence on emerging threats and threat actor behaviors."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Network & Endpoint Defense",
+    "strategic_goal": "Infrastructure Protection",
+    "sub_themes": [
+      {
+        "name": "Network Security Ops",
+        "keywords": ["firewall", "ids", "ips", "proxy", "vpn", "traffic", "pcap"],
+        "description": "Managing and monitoring network-based security controls."
+      },
+      {
+        "name": "Endpoint Security Ops",
+        "keywords": ["endpoint", "edr", "av", "antivirus", "mdr", "xdr", "host-based"],
+        "description": "Managing and monitoring security agents on individual workstations and servers."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Compliance, Policy & Documentation",
+    "strategic_goal": "Operational Governance",
+    "sub_themes": [
+      {
+        "name": "Standard Operating Procedures",
+        "keywords": ["sop", "playbook", "procedure", "workflow", "standard", "policy"],
+        "description": "Developing and adhering to documented security operations processes."
+      },
+      {
+        "name": "Compliance Reporting & Audit",
+        "keywords": ["compliance", "audit", "regulatory", "hipaa", "pci", "soc2", "report"],
+        "description": "Demonstrating adherence to internal and external security standards."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Communication & Stakeholder Management",
+    "strategic_goal": "Situational Awareness",
+    "sub_themes": [
+      {
+        "name": "Ticketing & Case Management",
+        "keywords": ["ticket", "case", "incident log", "documentation", "record", "update"],
+        "description": "The administrative tracking of security events and investigations."
+      },
+      {
+        "name": "Stakeholder Notification",
+        "keywords": ["notify", "inform", "brief", "email", "slack", "teams", "management"],
+        "description": "Keeping relevant parties informed during security events."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Tool & Platform Engineering",
+    "strategic_goal": "Operational Capability",
+    "sub_themes": [
+      {
+        "name": "Security Tool Maintenance",
+        "keywords": ["maintain", "configure", "administer", "health check", "tuning", "optimization"],
+        "description": "Ensuring security tools are functional and performant."
+      },
+      {
+        "name": "Automation & Scripting",
+        "keywords": ["script", "python", "bash", "powershell", "api", "automation", "soar"],
+        "description": "Developing code to streamline repetitive SOC tasks."
+      }
+    ]
+  },
+  {
+    "primary_theme": "Professional Development & Training",
+    "strategic_goal": "Workforce Readiness",
+    "sub_themes": [
+      {
+        "name": "Continuous Learning",
+        "keywords": ["train", "certif", "learn", "study", "conference", "workshop", "mentorship"],
+        "description": "Ongoing skill development for security analysts."
+      },
+      {
+        "name": "Team Collaboration",
+        "keywords": ["team", "collab", "assist", "meeting", "sync", "participate", "knowledge sharing"],
+        "description": "Internal coordination and support within the security team."
+      }
+    ]
+  }
+]
