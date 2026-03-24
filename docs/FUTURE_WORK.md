@@ -10,6 +10,7 @@
 - [ ] **LLM-Based Verification:** Use a local LLM (e.g., Llama 3) to verify the "Tier 1" classification of the filtered results to reduce false positives.
 - [ ] **Multi-Tier Analysis:** Update `data_analyzer.py` to export separate CSVs for Tier 2 and Tier 3 for longitudinal workforce studies.
 - [ ] **Skill Mapping:** Integrate with the NICE Framework KSA (Knowledge, Skills, Abilities) database to automatically map extracted tasks to standardized KSAs.
+- [x] **Hierarchical Taxonomy Implementation:** Move beyond flat 10-theme clustering to 22+ sub-themes mapped to strategic goals (V1.2).
 
 ## 3. Tooling & Pipeline
 - [ ] **Web Dashboard:** Build a Streamlit dashboard to visualize task frequency and thematic clustering results in real-time.
