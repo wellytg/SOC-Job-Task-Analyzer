@@ -184,15 +184,39 @@ def update_changelog(summary):
 def main():
     # --- Configuration ---
     source = "serpapi"
+    
+    # Comprehensive search queries inspired by NIST NICE, O*NET, and industry standards
     search_queries = [
+        # Standard Industry Titles
         "SOC Analyst Tier 1",
-        "Security Operations Center Analyst Tier 1",
+        "SOC Analyst Level 1",
         "Junior SOC Analyst",
-        "Cyber Defense Analyst Tier 1",
-        "Intrusion Analyst"
+        "Associate SOC Analyst",
+        "T1 SOC Analyst",
+        "L1 SOC Analyst",
+        
+        # NIST NICE Framework (Cyber Defense Analyst - PR-CDA-001)
+        "Cyber Defense Analyst Junior",
+        "Cyber Defense Analyst Entry",
+        "Cyber Defense Analyst I",
+        
+        # O*NET (Information Security Analyst - 15-1212.00)
+        "Information Security Analyst Junior",
+        "Information Security Analyst Entry",
+        "Information Security Analyst Associate",
+        
+        # Specialized Tier 1 Roles
+        "Security Triage Analyst",
+        "Intrusion Analyst Junior",
+        "SOC Monitor",
+        "Security Operations Center Analyst I"
     ]
+    
     location = "United States"
-    max_pages = 50
+    max_pages = 50 # Max pages per query (10 results per page)
+    # WARNING: Each (query * page) combination can consume SerpAPI credits.
+    # 16 queries * 50 pages = up to 800 requests. 
+    # For free tier (100 searches/month), consider reducing max_pages to 2-5.
     all_jobs_raw = []
 
     print("Starting job scraping via SerpApi...")
